@@ -1,5 +1,19 @@
-﻿public class ProductMaterial
+﻿using System.ComponentModel.DataAnnotations;
+
+public class ProductMaterial
+{
+
+    [Key]
+    public string ProductCode { get; set; }
+
+    [Key]
+    public string MaterialCode { get; set; }
+
+    public ProductMaterial(string ProductCode,
+string MaterialCode)
+
     {
-        public string ProductCode { get; set; }
-        public string MaterialCode { get; set; }
+        this.ProductCode = ProductCode;
+        this.MaterialCode = MaterialCode;
     }
+}
