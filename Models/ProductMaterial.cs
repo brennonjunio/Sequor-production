@@ -4,6 +4,7 @@ public class ProductMaterial
 {
 
     [Key]
+    
     public string ProductCode { get; set; }
 
     [Key]
