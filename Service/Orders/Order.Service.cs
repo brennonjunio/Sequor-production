@@ -15,20 +15,23 @@ namespace OrdersService
             this.db = db;
         }
 
-        public async Task<List<OrderModel>> GetOrders()
+        public async Task<ApiResponse<List<OrderModel>>> GetOrders()
         {
-            List<OrderModel> orders = new List<OrderModel>();
+            ApiResponse<List<OrderModel>> response;
 
             try
             {
-                orders = await db.Order.ToListAsync();
+                List<OrderModel> orders = await db.Order.ToListAsync();
+                response = new ApiResponse<List<OrderModel>>("200", "S", "Ordens Listadas com sucesso!", orders);
+
             }
             catch (System.Exception ex)
             {
-                throw new Exception(ex.Message);
+                response = new ApiResponse<List<OrderModel>>("201", "E", ex.Message,null);
+
             }
 
-            return orders;
+            return response;
         }
     }
 }
