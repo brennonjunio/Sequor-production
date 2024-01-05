@@ -48,7 +48,8 @@ namespace Sequor_production.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("quantity")
-                        .HasColumnType("int");
+                         .HasColumnType("real")
+                        .HasDefaultValue(18.2);
 
                     b.HasKey("order");
 
@@ -62,9 +63,8 @@ namespace Sequor_production.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("cycleTime")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("real")
-                        .HasDefaultValue(18.2f);
+                        .HasDefaultValue(18.2);
 
                     b.Property<string>("image")
                         .IsRequired()
@@ -87,15 +87,13 @@ namespace Sequor_production.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<string>("cycleTime")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("18.2");
+                    b.Property<float>("cycleTime")
+                        .HasColumnType("real")
+                        .HasDefaultValue(18.2);
 
-                    b.Property<string>("date")
+                    b.Property<DateTime>("date")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("email")
                         .IsRequired()
@@ -111,8 +109,8 @@ namespace Sequor_production.Migrations
 
                     b.Property<int>("quantity")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(18);
+                      .HasColumnType("real")
+                        .HasDefaultValue(18.2);
 
                     b.HasKey("id");
 
@@ -121,13 +119,13 @@ namespace Sequor_production.Migrations
 
             modelBuilder.Entity("ProductMaterial", b =>
                 {
-                    b.Property<string>("ProductCode")
+                    b.Property<string>("productCode")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("MaterialCode")
+                    b.Property<string>("materialCode")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ProductCode", "MaterialCode");
+                    b.HasKey("productCode", "materialCode");
 
                     b.ToTable("ProductMaterial");
                 });

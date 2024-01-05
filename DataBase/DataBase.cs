@@ -23,7 +23,7 @@ namespace sequorProduction.DataContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductMaterial>()
-                .HasKey(pm => new { pm.ProductCode, pm.MaterialCode });
+                .HasKey(pm => new { pm.productCode, pm.materialCode });
 
             modelBuilder.Entity<ProductModel>()
            .Property(p => p.cycleTime)

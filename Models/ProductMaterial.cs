@@ -2,19 +2,15 @@
 
 public class ProductMaterial
 {
+    [Key]
+    public string productCode { get; set; }
 
     [Key]
-    
-    public string ProductCode { get; set; }
+    public string materialCode { get; set; }
 
-    [Key]
-    public string MaterialCode { get; set; }
-
-    public ProductMaterial(string ProductCode,
-string MaterialCode)
-
+    public ProductMaterial(string productCode, string materialCode)
     {
-        this.ProductCode = ProductCode;
-        this.MaterialCode = MaterialCode;
+        this.productCode = productCode;
+        this.materialCode = materialCode;
     }
 }

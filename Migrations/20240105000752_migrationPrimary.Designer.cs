@@ -48,7 +48,7 @@ namespace Sequor_production.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("quantity")
-                        .HasColumnType("int");
+                        .HasColumnType("real");
 
                     b.HasKey("order");
 
@@ -84,13 +84,13 @@ namespace Sequor_production.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<string>("cycleTime")
+                    b.Property<float>("cycleTime")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("real");
 
-                    b.Property<string>("date")
+                    b.Property<DateTime>("date")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("email")
                         .IsRequired()
@@ -105,7 +105,7 @@ namespace Sequor_production.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("quantity")
-                        .HasColumnType("int");
+                        .HasColumnType("real");
 
                     b.HasKey("id");
 
@@ -114,13 +114,13 @@ namespace Sequor_production.Migrations
 
             modelBuilder.Entity("ProductMaterial", b =>
                 {
-                    b.Property<string>("ProductCode")
+                    b.Property<string>("productCode")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("materialCode")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("MaterialCode")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ProductCode", "MaterialCode");
+                    b.HasKey("productCode", "materialCode");
 
                     b.ToTable("ProductMaterial");
                 });

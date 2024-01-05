@@ -7,11 +7,11 @@ public class OrderModel
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 	public string order { get; set; }
-	public int quantity { get; set; }
+	public float quantity { get; set; }
 	public string productCode { get; set; }
 	public OrderModel(
 		string order,
-		int quantity,
+		float quantity,
 		string productCode
 	)
 	{
