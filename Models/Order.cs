@@ -2,14 +2,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Order
+public class OrderModel
 {
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 	public string order { get; set; }
 	public int quantity { get; set; }
 	public string productCode { get; set; }
-	public Order(
+	public OrderModel(
 		string order,
 		int quantity,
 		string productCode
@@ -20,3 +20,4 @@ public class Order
 		this.productCode = productCode;
 	}
 }
+

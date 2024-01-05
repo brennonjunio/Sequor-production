@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OrdersService;
 using sequorProduction.DataContext;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<DataBase>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddScoped<IOrdersInterface, Order>();
+
 
 var app = builder.Build();
 

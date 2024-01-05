@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-public class User
+public class UserModel
 {
     [Key]
     public string email { get; set; }
@@ -9,7 +9,7 @@ public class User
     public DateTime endDate { get; set; }
 
     // Construtor
-    public User(string email, string name, DateTime initialDate, DateTime endDate)
+    public UserModel(string email, string name, DateTime initialDate, DateTime endDate)
     {
         this.email = email;
         this.name = name;

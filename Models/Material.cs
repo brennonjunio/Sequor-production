@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Material
+public class MaterialModel
 {
     [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -9,7 +9,7 @@ public class Material
 
     public string materialDescription { get; set; }
 
-    public Material(string materialCode, string materialDescription)
+    public MaterialModel(string materialCode, string materialDescription)
     {
         this.materialCode = materialCode;
         this.materialDescription = materialDescription;

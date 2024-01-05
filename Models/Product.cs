@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Product
+public class ProductModel
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -9,7 +9,7 @@ public class Product
     public string productDescription { get; set; }
     public string image { get; set; }
     public float cycleTime { get; set; }
-    public Product(
+    public ProductModel(
         string productCode,
         string productDescription,
         string image,

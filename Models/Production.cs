@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Production
+public class ProductionModel
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -14,7 +14,7 @@ public class Production
     public string materialCode { get; set; }
     public string cycleTime { get; set; }
 
-    public Production(
+    public ProductionModel(
 
         int id,
         string email,
