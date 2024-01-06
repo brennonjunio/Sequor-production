@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class OrderResponse
 {
-    public List<Response> Orders { get; set; }
+    public List<ResponseOrder> Orders { get; set; }
 
     public OrderResponse() { }
 }
 
-public class Response
+public class ResponseOrder
 {
     public string order { get; set; }
     public decimal quantity { get; set; }

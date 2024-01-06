@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.EntityFrameworkCore;
 using sequorProduction.DataContext;
 
@@ -63,7 +64,7 @@ namespace OrdersService
                                 Orders = groupedItem
                                     .Select(
                                         orderItem =>
-                                            new Response
+                                            new ResponseOrder
                                             {
                                                 order = orderItem.order,
                                                 quantity = orderItem.quantity,
@@ -100,6 +101,64 @@ namespace OrdersService
             catch (Exception ex)
             {
                 response = new ApiResponse<List<OrderResponse>>("201", "E", ex.Message, null);
+            }
+
+            return response;
+        }
+
+        public async Task<ApiResponse<List<ProductionResponse>>> GetProduction(string emailParams)
+        {
+            ApiResponse<List<ProductionResponse>> response;
+
+            try
+            {
+                var validEmail =
+                    from user in db.User
+                    where user.email == emailParams
+                    select new { user.name };
+                var resultEmail = await validEmail.ToListAsync();
+                if (resultEmail.Count == 0)
+                {
+                    response = new ApiResponse<List<ProductionResponse>>(
+                        "201",
+                        "E",
+                        "E-mail não encontrado",
+                        null
+                    );
+                    return response;
+                }
+
+                var query =
+                    from p in db.Production
+                    where p.email == emailParams
+                    orderby p.id
+                    select new ProductionResponse
+                    {
+                        Productions = new List<ResponseProduction>
+                        {
+                            new ResponseProduction
+                            {
+                                order = p.order,
+                                date = p.date,
+                                quantity = p.quantity,
+                                materialCode = p.materialCode,
+                                cycleTime = p.cycleTime
+                            }
+                        }
+                    };
+
+                var result = await query.ToListAsync();
+                Console.WriteLine(result);
+                response = new ApiResponse<List<ProductionResponse>>(
+                    "200",
+                    "S",
+                    "Produções Listadas Com Sucesso!",
+                    result
+                );
+            }
+            catch (System.Exception ex)
+            {
+                response = new ApiResponse<List<ProductionResponse>>("201", "E", ex.Message, null);
             }
 
             return response;

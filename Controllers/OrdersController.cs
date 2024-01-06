@@ -1,19 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace OrdersController {
+namespace OrdersController
+{
     [Route("api/[Controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
         private readonly IOrdersInterface _orderInterface;
 
-        public OrdersController(IOrdersInterface orderInterface ){
+        public OrdersController(IOrdersInterface orderInterface)
+        {
             _orderInterface = orderInterface;
         }
+
         [HttpGet("GetOrders")]
         public async Task<ActionResult<List<OrderModel>>> GetOrders()
         {
             return Ok(await _orderInterface.GetOrders());
+        }
+
+        [HttpGet("GetProduction")]
+        public async Task<ActionResult<List<ProductionModel>>> GetProduction(
+            [FromQuery] string email
+        )
+        {
+            return Ok(await _orderInterface.GetProduction(email));
         }
     }
 }

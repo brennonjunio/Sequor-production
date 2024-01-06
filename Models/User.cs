@@ -8,7 +8,6 @@ public class UserModel
     public DateTime initialDate { get; set; }
     public DateTime endDate { get; set; }
 
-    // Construtor
     public UserModel(string email, string name, DateTime initialDate, DateTime endDate)
     {
         this.email = email;
