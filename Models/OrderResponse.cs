@@ -4,6 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class OrderResponse
 {
+    public List<Response> Orders { get; set; }
+
+    public OrderResponse() { }
+}
+
+public class Response
+{
     public string order { get; set; }
     public decimal quantity { get; set; }
     public string productCode { get; set; }
@@ -11,8 +18,6 @@ public class OrderResponse
     public string image { get; set; }
     public decimal cycleTime { get; set; }
     public List<MaterialResponse> materials { get; set; }
-
-    public OrderResponse() {}
 }
 
 public class MaterialResponse

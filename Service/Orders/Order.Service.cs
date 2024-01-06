@@ -60,20 +60,29 @@ namespace OrdersService
                         groupedItem =>
                             new OrderResponse
                             {
-                                order = groupedItem.Key.order,
-                                quantity = groupedItem.Key.quantity,
-                                productCode = groupedItem.Key.productCode,
-                                productDescription = groupedItem.Key.productDescription,
-                                image = groupedItem.Key.image,
-                                cycleTime = groupedItem.Key.cycleTime,
-                                materials = groupedItem
+                                Orders = groupedItem
                                     .Select(
-                                        materialItem =>
-                                            new MaterialResponse
+                                        orderItem =>
+                                            new Response
                                             {
-                                                materialCode = materialItem.materialCode,
-                                                materialDescription =
-                                                    materialItem.materialDescription
+                                                order = orderItem.order,
+                                                quantity = orderItem.quantity,
+                                                productCode = orderItem.productCode,
+                                                productDescription = orderItem.productDescription,
+                                                image = orderItem.image,
+                                                cycleTime = orderItem.cycleTime,
+                                                materials = groupedItem
+                                                    .Select(
+                                                        materialItem =>
+                                                            new MaterialResponse
+                                                            {
+                                                                materialCode =
+                                                                    materialItem.materialCode,
+                                                                materialDescription =
+                                                                    materialItem.materialDescription
+                                                            }
+                                                    )
+                                                    .ToList()
                                             }
                                     )
                                     .ToList()
