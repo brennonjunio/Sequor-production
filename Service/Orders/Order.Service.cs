@@ -86,7 +86,6 @@ namespace OrdersService
                     "S",
                     "Ordens Listadas com sucesso!",
                     orders
-                // orders
                 );
             }
             catch (Exception ex)

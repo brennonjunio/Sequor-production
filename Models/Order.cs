@@ -10,11 +10,9 @@ public class OrderModel
     public decimal quantity { get; set; }
     public string productCode { get; set; }
 
-    // Propriedade de navegação
     [ForeignKey("productCode")]
     public ProductModel product { get; set; }
 
-    // Construtor sem parâmetros necessário para o Entity Framework
     public OrderModel() { }
 
     public OrderModel(string order, decimal quantity, string productCode, ProductModel product)
