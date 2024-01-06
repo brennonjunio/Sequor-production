@@ -1,4 +1,4 @@
 public interface IOrdersInterface
 {
-       Task<ApiResponse<List<OrderModel>>> GetOrders();
+    Task<ApiResponse<List<OrderResponse>>> GetOrders();
 }
