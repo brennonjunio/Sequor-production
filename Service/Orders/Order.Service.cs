@@ -16,10 +16,8 @@ namespace OrdersService
             this.db = db;
         }
 
-        public async Task<ApiResponse<List<OrderResponse>>> GetOrders()
+        public async Task<object> GetOrders()
         {
-            ApiResponse<List<OrderResponse>> response;
-
             try
             {
                 var query =
@@ -81,27 +79,30 @@ namespace OrdersService
                     )
                     .ToList();
 
-                var responseOrder = new OrderResponse { Orders = groupedOrders };
+                var response = new
+                {
+                    status = "200",
+                    type = "S",
+                    description = "Ordens Listadas com sucesso!",
+                    orders = groupedOrders
+                };
 
-                response = new ApiResponse<List<OrderResponse>>(
-                    "200",
-                    "S",
-                    "Ordens Listadas com sucesso!",
-                    new List<OrderResponse> { responseOrder }
-                );
+                return response;
             }
             catch (Exception ex)
             {
-                response = new ApiResponse<List<OrderResponse>>("201", "E", ex.Message, null);
+                return new
+                {
+                    status = "201",
+                    type = "E",
+                    description = ex.Message,
+                    orders = new List<ResponseOrder>()
+                };
             }
-
-            return response;
         }
 
-        public async Task<ApiResponse<List<ProductionResponse>>> GetProduction(string emailParams)
+        public async Task<object> GetProduction(string emailParams)
         {
-            ApiResponse<List<ProductionResponse>> response;
-
             try
             {
                 var validEmail =
@@ -111,22 +112,21 @@ namespace OrdersService
                 var resultEmail = await validEmail.ToListAsync();
                 if (resultEmail.Count == 0)
                 {
-                    response = new ApiResponse<List<ProductionResponse>>(
-                        "201",
-                        "E",
-                        "Falha no apontamento - Usuário não cadastrado!",
-                        null
-                    );
-                    return response;
+                    return new
+                    {
+                        status = "201",
+                        type = "E",
+                        description = "Falha no apontamento - Usuário não cadastrado!",
+                    };
                 }
 
                 var query =
                     from p in db.Production
                     where p.email == emailParams
                     orderby p.id
-                    select new ProductionResponse
+                    select new
                     {
-                        Productions = new List<ResponseProduction>
+                        productions = new List<ResponseProduction>
                         {
                             new ResponseProduction
                             {
@@ -140,20 +140,23 @@ namespace OrdersService
                     };
 
                 var result = await query.ToListAsync();
-                Console.WriteLine(result);
-                response = new ApiResponse<List<ProductionResponse>>(
-                    "200",
-                    "S",
-                    "Produções Listadas Com Sucesso!",
-                    result
-                );
+                return new
+                {
+                    status = "200",
+                    type = "S",
+                    description = "Produções Listadas Com Sucesso!",
+                    productions = result.SelectMany(r => r.productions).ToList()
+                };
             }
             catch (System.Exception ex)
             {
-                response = new ApiResponse<List<ProductionResponse>>("201", "E", ex.Message, null);
+                return new
+                {
+                    status = "201",
+                    type = "E",
+                    description = ex.Message,
+                };
             }
-
-            return response;
         }
     }
 }
