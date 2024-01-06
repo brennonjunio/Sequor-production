@@ -7,12 +7,11 @@ public class OrderResponse
     public string order { get; set; }
     public decimal  quantity { get; set; }
     public string productCode { get; set; }
-        public string productDescription { get; set; } // Adicione esta linha
-        public string image { get; set; } // Adicione esta linha
-        public decimal cycleTime { get; set; } // Adicione esta linha
+        public string productDescription { get; set; } 
+        public string image { get; set; } 
+        public decimal cycleTime { get; set; }
 
 
-    // Construtor sem parâmetros necessário para o Entity Framework
     public OrderResponse() { }
 
     public OrderResponse(string order, decimal  quantity, string productCode, ProductModel product)
