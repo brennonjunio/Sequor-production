@@ -15,7 +15,6 @@ public class ProductionModel
     public float cycleTime { get; set; }
 
     public ProductionModel(
-
         int id,
         string email,
         string order,
@@ -33,6 +32,4 @@ public class ProductionModel
         this.materialCode = materialCode;
         this.cycleTime = cycleTime;
     }
-
-
 }
