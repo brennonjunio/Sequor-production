@@ -81,7 +81,7 @@ namespace OrdersService
 
                 var response = new
                 {
-                    status = "200",
+                    status = 201,
                     type = "S",
                     description = "Ordens Listadas com sucesso!",
                     orders = groupedOrders
@@ -93,7 +93,7 @@ namespace OrdersService
             {
                 return new
                 {
-                    status = "201",
+                    status = 500,
                     type = "E",
                     description = ex.Message,
                     orders = new List<ResponseOrder>()
@@ -112,7 +112,12 @@ namespace OrdersService
                 var resultEmail = await validEmail.ToListAsync();
                 if (resultEmail.Count == 0)
                 {
-                    throw new Exception("AAAAAAAAAAAAAA");
+                    return new
+                    {
+                        status = 401,
+                        type = "E",
+                        description = "E-mail não encontrado!",
+                    };
                 }
 
                 var query =
@@ -139,7 +144,7 @@ namespace OrdersService
                 {
                     return new
                     {
-                        status = "200",
+                        status = 200,
                         type = "S",
                         description = "Produções Listadas Com Sucesso!",
                         productions = result.SelectMany(r => r.productions).ToList()
@@ -149,7 +154,7 @@ namespace OrdersService
                 {
                     return new
                     {
-                        status = "201",
+                        status = 500,
                         type = "E",
                         description = "Nenhum resultado encontrado.",
                     };
@@ -159,7 +164,7 @@ namespace OrdersService
             {
                 return new
                 {
-                    status = "201",
+                    status = 500,
                     type = "E",
                     description = ex.Message,
                 };
@@ -188,7 +193,7 @@ namespace OrdersService
 
                 return new
                 {
-                    status = "200",
+                    status = 201,
                     type = "S",
                     description = "Produção cadastrada com sucesso!",
                 };
@@ -197,7 +202,7 @@ namespace OrdersService
             {
                 return new
                 {
-                    status = "201",
+                    status = 500,
                     type = "E",
                     description = ex.Message,
                 };

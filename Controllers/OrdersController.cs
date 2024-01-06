@@ -24,7 +24,21 @@ namespace OrdersController
             [FromQuery] string email
         )
         {
-            return Ok(await _orderInterface.GetProduction(email));
+            var result = await _orderInterface.GetProduction(email);
+
+            if (result != null)
+            {
+                var statusProperty = result.GetType().GetProperty("status");
+
+                if (statusProperty != null)
+                {
+                    var statusValue = (int)statusProperty.GetValue(result);
+
+                    return StatusCode(statusValue, result);
+                }
+            }
+            var description = "Erro não reconhecido";
+            return BadRequest(description);
         }
     }
 }
