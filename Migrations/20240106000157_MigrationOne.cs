@@ -61,13 +61,13 @@ namespace Sequor_production.Migrations
                         order = table.Column<string>(type: "varchar(50)", nullable: false),
                         date = table.Column<DateTime>(type: "Datetime2", nullable: false),
                         quantity = table.Column<decimal>(
-                            type: "numeric(18,2)",
+                            type: "decimal(18,2)",
                             nullable: false,
                             defaultValue: 18.2m
                         ),
                         materialCode = table.Column<string>(type: "varchar(50)", nullable: false),
                         cycleTime = table.Column<decimal>(
-                            type: "numeric(18,2)",
+                            type: "decimal(18,2)",
                             nullable: false,
                             defaultValue: 18.2m
                         )

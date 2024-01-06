@@ -62,7 +62,7 @@ namespace Sequor_production.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<float>("cycleTime")
+                    b.Property<decimal>("cycleTime")
                         .HasColumnType("real")
                         .HasDefaultValue(18.2);
 
@@ -87,7 +87,7 @@ namespace Sequor_production.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<float>("cycleTime")
+                    b.Property<decimal>("cycleTime")
                         .HasColumnType("real")
                         .HasDefaultValue(18.2);
 

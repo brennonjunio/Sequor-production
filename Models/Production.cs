@@ -10,18 +10,18 @@ public class ProductionModel
     public string email { get; set; }
     public string order { get; set; }
     public DateTime date { get; set; }
-    public float quantity { get; set; }
+    public decimal quantity { get; set; }
     public string materialCode { get; set; }
-    public float cycleTime { get; set; }
+    public decimal cycleTime { get; set; }
 
     public ProductionModel(
         int id,
         string email,
         string order,
         DateTime date,
-        float quantity,
+        decimal quantity,
         string materialCode,
-        float cycleTime
+        decimal cycleTime
     )
     {
         this.id = id;

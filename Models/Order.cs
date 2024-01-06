@@ -7,7 +7,7 @@ public class OrderModel
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public string order { get; set; }
-    public float quantity { get; set; }
+    public decimal quantity { get; set; }
     public string productCode { get; set; }
 
     // Propriedade de navegação
@@ -17,7 +17,7 @@ public class OrderModel
     // Construtor sem parâmetros necessário para o Entity Framework
     public OrderModel() { }
 
-    public OrderModel(string order, float quantity, string productCode, ProductModel product)
+    public OrderModel(string order, decimal quantity, string productCode, ProductModel product)
     {
         this.order = order;
         this.quantity = quantity;

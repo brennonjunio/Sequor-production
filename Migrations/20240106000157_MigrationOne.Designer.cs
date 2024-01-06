@@ -49,7 +49,7 @@ namespace Sequor_production.Migrations
                     .IsRequired()
                     .HasColumnType("nvarchar(450)");
 
-                b.Property<float>("quantity")
+                b.Property<decimal>("quantity")
                     .HasColumnType("real");
 
                 b.HasKey("order");
@@ -65,7 +65,7 @@ namespace Sequor_production.Migrations
         .ValueGeneratedOnAdd()
         .HasColumnType("int");
 
-    b.Property<float>("cycleTime")
+    b.Property<decimal>("cycleTime")
         .ValueGeneratedOnAdd()
         .HasColumnType("real")
         .HasDefaultValue(18.2f);
@@ -85,7 +85,7 @@ namespace Sequor_production.Migrations
         .IsRequired()
         .HasColumnType("nvarchar(max)");
 
-    b.Property<float>("quantity")
+    b.Property<decimal>("quantity")
         .ValueGeneratedOnAdd()
         .HasColumnType("real")
         .HasDefaultValue(18.2f);
@@ -115,7 +115,7 @@ namespace Sequor_production.Migrations
                     .ValueGeneratedOnAdd()
                     .HasColumnType("nvarchar(450)");
 
-                b.Property<float>("cycleTime")
+                b.Property<decimal>("cycleTime")
                     .ValueGeneratedOnAdd()
                     .HasColumnType("real")
                     .HasDefaultValue(18.2f);
