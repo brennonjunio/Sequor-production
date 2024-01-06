@@ -112,12 +112,7 @@ namespace OrdersService
                 var resultEmail = await validEmail.ToListAsync();
                 if (resultEmail.Count == 0)
                 {
-                    return new
-                    {
-                        status = "201",
-                        type = "E",
-                        description = "Falha no apontamento - Usuário não cadastrado!",
-                    };
+                    throw new Exception("AAAAAAAAAAAAAA");
                 }
 
                 var query =
@@ -140,15 +135,65 @@ namespace OrdersService
                     };
 
                 var result = await query.ToListAsync();
+                if (result.Count > 0)
+                {
+                    return new
+                    {
+                        status = "200",
+                        type = "S",
+                        description = "Produções Listadas Com Sucesso!",
+                        productions = result.SelectMany(r => r.productions).ToList()
+                    };
+                }
+                else
+                {
+                    return new
+                    {
+                        status = "201",
+                        type = "E",
+                        description = "Nenhum resultado encontrado.",
+                    };
+                }
+            }
+            catch (System.Exception ex)
+            {
+                return new
+                {
+                    status = "201",
+                    type = "E",
+                    description = ex.Message,
+                };
+            }
+        }
+
+        public async Task<object> SetProduction(
+            string emailParams,
+            string orderParams,
+            DateTime productionDateParams,
+            decimal quantityParams,
+            string materialCodeParams,
+            decimal cycleTimeParams
+        )
+        {
+            try
+            {
+                var customValidator = new CustomValidator(db);
+
+                await customValidator.ValidateEmailAsync(emailParams);
+                await customValidator.ValidateOrderAsync(orderParams);
+                await customValidator.ValidateMaterialInOrderAsync(orderParams, materialCodeParams);
+                await customValidator.ValidateQuantityAsync(orderParams, quantityParams);
+                await customValidator.ValidateDateAsync(emailParams, productionDateParams);
+                await customValidator.ValidateCycleTimeAsync(orderParams, cycleTimeParams);
+
                 return new
                 {
                     status = "200",
                     type = "S",
-                    description = "Produções Listadas Com Sucesso!",
-                    productions = result.SelectMany(r => r.productions).ToList()
+                    description = "Produção cadastrada com sucesso!",
                 };
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 return new
                 {
