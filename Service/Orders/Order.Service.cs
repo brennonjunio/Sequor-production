@@ -44,13 +44,12 @@ namespace OrdersService
 
                 var result = await query.ToListAsync();
 
-                var orders = result
+                var groupedOrders = result
                     .GroupBy(
                         item =>
                             new
                             {
                                 item.order,
-                                item.quantity,
                                 item.productCode,
                                 item.productDescription,
                                 item.image,
@@ -59,31 +58,22 @@ namespace OrdersService
                     )
                     .Select(
                         groupedItem =>
-                            new OrderResponse
+                            new ResponseOrder
                             {
-                                Orders = groupedItem
+                                order = groupedItem.Key.order,
+                                quantity = groupedItem.Sum(item => item.quantity),
+                                productCode = groupedItem.Key.productCode,
+                                productDescription = groupedItem.Key.productDescription,
+                                image = groupedItem.Key.image,
+                                cycleTime = groupedItem.Key.cycleTime,
+                                materials = groupedItem
                                     .Select(
-                                        orderItem =>
-                                            new ResponseOrder
+                                        materialItem =>
+                                            new MaterialResponse
                                             {
-                                                order = orderItem.order,
-                                                quantity = orderItem.quantity,
-                                                productCode = orderItem.productCode,
-                                                productDescription = orderItem.productDescription,
-                                                image = orderItem.image,
-                                                cycleTime = orderItem.cycleTime,
-                                                materials = groupedItem
-                                                    .Select(
-                                                        materialItem =>
-                                                            new MaterialResponse
-                                                            {
-                                                                materialCode =
-                                                                    materialItem.materialCode,
-                                                                materialDescription =
-                                                                    materialItem.materialDescription
-                                                            }
-                                                    )
-                                                    .ToList()
+                                                materialCode = materialItem.materialCode,
+                                                materialDescription =
+                                                    materialItem.materialDescription
                                             }
                                     )
                                     .ToList()
@@ -91,11 +81,13 @@ namespace OrdersService
                     )
                     .ToList();
 
+                var responseOrder = new OrderResponse { Orders = groupedOrders };
+
                 response = new ApiResponse<List<OrderResponse>>(
                     "200",
                     "S",
                     "Ordens Listadas com sucesso!",
-                    orders
+                    new List<OrderResponse> { responseOrder }
                 );
             }
             catch (Exception ex)
@@ -122,7 +114,7 @@ namespace OrdersService
                     response = new ApiResponse<List<ProductionResponse>>(
                         "201",
                         "E",
-                        "E-mail não encontrado",
+                        "Falha no apontamento - Usuário não cadastrado!",
                         null
                     );
                     return response;
