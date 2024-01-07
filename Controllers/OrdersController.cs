@@ -30,15 +30,35 @@ namespace OrdersController
             {
                 var statusProperty = result.GetType().GetProperty("status");
 
-                if (statusProperty != null)
-                {
-                    var statusValue = (int)statusProperty.GetValue(result);
+                var statusValue = (int)statusProperty.GetValue(result);
 
-                    return StatusCode(statusValue, result);
-                }
+                return StatusCode(statusValue, result);
             }
-            var description = "Erro não reconhecido";
-            return BadRequest(description);
+            return NoContent();
+        }
+
+        [HttpPost("SetProduction")]
+        public async Task<ActionResult<List<object>>> SetProduction(
+            [FromBody] ProductionRequestModel request
+        )
+        {
+            var result = await _orderInterface.SetProduction(
+                request.Email,
+                request.Order,
+                request.ProductionDate,
+                request.Quantity,
+                request.MaterialCode,
+                request.CycleTime
+            );
+            if (result != null)
+            {
+                var statusProperty = result.GetType().GetProperty("status");
+
+                var statusValue = (int)statusProperty.GetValue(result);
+
+                return StatusCode(statusValue, result);
+            }
+            return NoContent();
         }
     }
 }

@@ -105,19 +105,11 @@ namespace OrdersService
         {
             try
             {
-                var validEmail =
-                    from user in db.User
-                    where user.email == emailParams
-                    select new { user.name };
-                var resultEmail = await validEmail.ToListAsync();
-                if (resultEmail.Count == 0)
+                var customValidator = new CustomValidator(db);
+                string? validationMessage = await customValidator.ValidateEmailAsync(emailParams);
+                if (validationMessage != null)
                 {
-                    return new
-                    {
-                        status = 401,
-                        type = "E",
-                        description = "E-mail não encontrado!",
-                    };
+                    throw new Exception(validationMessage);
                 }
 
                 var query =
@@ -184,12 +176,57 @@ namespace OrdersService
             {
                 var customValidator = new CustomValidator(db);
 
-                await customValidator.ValidateEmailAsync(emailParams);
-                await customValidator.ValidateOrderAsync(orderParams);
-                await customValidator.ValidateMaterialInOrderAsync(orderParams, materialCodeParams);
-                await customValidator.ValidateQuantityAsync(orderParams, quantityParams);
-                await customValidator.ValidateDateAsync(emailParams, productionDateParams);
-                await customValidator.ValidateCycleTimeAsync(orderParams, cycleTimeParams);
+                var validationConfigurations = new List<CustomValidator.ValidationConfig>
+                {
+                    new CustomValidator.ValidationConfig
+                    {
+                        ValidationType = CustomValidator.ValidationType.Email,
+                        Email = emailParams
+                    },
+                    new CustomValidator.ValidationConfig
+                    {
+                        ValidationType = CustomValidator.ValidationType.Order,
+                        Order = orderParams
+                    },
+                    new CustomValidator.ValidationConfig
+                    {
+                        ValidationType = CustomValidator.ValidationType.MaterialInOrder,
+                        Order = orderParams,
+                        MaterialCode = materialCodeParams
+                    },
+                    new CustomValidator.ValidationConfig
+                    {
+                        ValidationType = CustomValidator.ValidationType.Quantity,
+                        Order = orderParams,
+                        Quantity = quantityParams
+                    },
+                    new CustomValidator.ValidationConfig
+                    {
+                        ValidationType = CustomValidator.ValidationType.Date,
+                        Email = emailParams,
+                        ProductionDate = productionDateParams
+                    },
+                    new CustomValidator.ValidationConfig
+                    {
+                        ValidationType = CustomValidator.ValidationType.CycleTime,
+                        Order = orderParams,
+                        CycleTime = cycleTimeParams
+                    }
+                };
+
+                foreach (var config in validationConfigurations)
+                {
+                    var validationMessage = await customValidator.ValidationProduction(config);
+                    if (validationMessage != null)
+                    {
+                        return new
+                        {
+                            status = 400,
+                            type = "E",
+                            description = validationMessage
+                        };
+                    }
+                }
 
                 return new
                 {
