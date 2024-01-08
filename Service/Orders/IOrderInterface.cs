@@ -6,7 +6,8 @@ public interface IOrdersInterface
     Task<object> SetProduction(
         string email,
         string order,
-        DateTime productionDate,
+        string productionDate,
+        string productionTime,
         decimal quantity,
         string materialCode,
         decimal cycleTime

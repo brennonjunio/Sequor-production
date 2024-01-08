@@ -166,7 +166,8 @@ namespace OrdersService
         public async Task<object> SetProduction(
             string emailParams,
             string orderParams,
-            DateTime productionDateParams,
+            string productionDateParams,
+            string productionTimeParams,
             decimal quantityParams,
             string materialCodeParams,
             decimal cycleTimeParams
@@ -174,6 +175,10 @@ namespace OrdersService
         {
             try
             {
+                var combinedDateTime = DateTime.Parse(
+                    $"{productionDateParams} {productionTimeParams}"
+                );
+
                 var customValidator = new CustomValidator(db);
 
                 var validationConfigurations = new List<CustomValidator.ValidationConfig>
@@ -204,14 +209,8 @@ namespace OrdersService
                     {
                         ValidationType = CustomValidator.ValidationType.Date,
                         Email = emailParams,
-                        ProductionDate = productionDateParams
+                        ProductionDate = combinedDateTime
                     },
-                    new CustomValidator.ValidationConfig
-                    {
-                        ValidationType = CustomValidator.ValidationType.CycleTime,
-                        Order = orderParams,
-                        CycleTime = cycleTimeParams
-                    }
                 };
 
                 foreach (var config in validationConfigurations)
@@ -227,12 +226,30 @@ namespace OrdersService
                         };
                     }
                 }
-
+                var valid = await customValidator.ValidateCycleTimeAsync(
+                    orderParams,
+                    cycleTimeParams
+                );
+                var message = "Produção cadastrada com sucesso!";
+                if (valid != null)
+                {
+                    message = valid;
+                }
+                var newProduction = new ProductionModel(
+                    emailParams,
+                    orderParams,
+                    combinedDateTime,
+                    quantityParams,
+                    materialCodeParams,
+                    cycleTimeParams
+                );
+                db.Production.AddRange(newProduction);
+                db.SaveChanges();
                 return new
                 {
-                    status = 201,
+                    status = 200,
                     type = "S",
-                    description = "Produção cadastrada com sucesso!",
+                    description = message,
                 };
             }
             catch (Exception ex)

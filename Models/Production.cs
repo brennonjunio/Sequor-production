@@ -6,7 +6,7 @@ public class ProductionModel
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int id { get; set; }
+    public long id { get; set; }
     public string email { get; set; }
     public string order { get; set; }
     public DateTime date { get; set; }
@@ -15,7 +15,6 @@ public class ProductionModel
     public decimal cycleTime { get; set; }
 
     public ProductionModel(
-        int id,
         string email,
         string order,
         DateTime date,
@@ -24,7 +23,6 @@ public class ProductionModel
         decimal cycleTime
     )
     {
-        this.id = id;
         this.email = email;
         this.order = order;
         this.date = date;

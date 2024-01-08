@@ -87,10 +87,6 @@ public class CustomValidator
             )
             .FirstOrDefaultAsync();
 
-        Console.WriteLine("aqui>>>");
-        Console.WriteLine(validQuantity?.Quantity);
-        Console.WriteLine(quantityParams);
-
         if (validQuantity != null && quantityParams > validQuantity.Quantity)
         {
             throw new Exception("Quantidade deve ser menor ou igual à quantidade da ordem.");
@@ -111,13 +107,17 @@ public class CustomValidator
 
         if (!validDate)
         {
-            throw new Exception("Data de apontamento diferente da data!");
+            throw new Exception("Data de apontamento diferente da periodo definado para usuario!");
         }
         return null;
     }
 
     public async Task<string?> ValidateCycleTimeAsync(string orderParams, decimal cycleTimeParams)
     {
+        if (cycleTimeParams <= 0)
+        {
+            throw new Exception("Tempo de ciclo informado deve ser maior que 0");
+        }
         var validCycle = await (
             from order in db.Order
             join product in db.Product on order.productCode equals product.productCode
@@ -138,9 +138,9 @@ public class CustomValidator
 
         if (validCycle != null && cycleTimeParams < validCycle.cycleTime)
         {
-            throw new Exception(
-                "Tempo de ciclo informado é menor que o tempo cadastrado no produto"
-            );
+            
+              return  "Sucesso ao gerar, OBS: Tempo de ciclo informado é menor que o cadastrado para usuario";
+            
         }
         return null;
     }

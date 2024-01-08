@@ -46,6 +46,7 @@ namespace OrdersController
                 request.Email,
                 request.Order,
                 request.ProductionDate,
+                request.ProductionTime,
                 request.Quantity,
                 request.MaterialCode,
                 request.CycleTime
