@@ -97,17 +97,23 @@ public class CustomValidator
 
     public async Task<string?> ValidateDateAsync(string emailParams, DateTime productionDateParams)
     {
-        var validDate = await db.User.Where(
-            user =>
-                user.email == emailParams
-                && user.initialDate <= productionDateParams
-                && user.endDate >= productionDateParams
-        )
-            .AnyAsync();
+        var userDateRange = await db.User.Where(user => user.email == emailParams)
+            .Select(user => new { user.initialDate, user.endDate })
+            .FirstOrDefaultAsync();
 
-        if (!validDate)
+        if (userDateRange == null)
         {
-            throw new Exception("Data de apontamento diferente da periodo definado para usuario!");
+            throw new Exception("Usuário não encontrado!");
+        }
+
+        if (
+            productionDateParams < userDateRange.initialDate
+            || productionDateParams > userDateRange.endDate
+        )
+        {
+            throw new Exception(
+                $"Data de apontamento fora do período definido para o usuário! Data de apontamento válida entre: {userDateRange.initialDate} e {userDateRange.endDate} "
+            );
         }
         return null;
     }
@@ -138,9 +144,7 @@ public class CustomValidator
 
         if (validCycle != null && cycleTimeParams < validCycle.cycleTime)
         {
-            
-              return  "Sucesso ao gerar, OBS: Tempo de ciclo informado é menor que o cadastrado para usuario";
-            
+            return "Sucesso ao gerar, OBS: Tempo de ciclo informado é menor que o cadastrado para usuario";
         }
         return null;
     }
