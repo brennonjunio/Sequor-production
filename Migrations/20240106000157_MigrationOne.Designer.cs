@@ -61,9 +61,9 @@ namespace Sequor_production.Migrations
 
           modelBuilder.Entity<ProductionModel>(b =>
 {
-    b.Property<int>("id")
+    b.Property<long>("id")
         .ValueGeneratedOnAdd()
-        .HasColumnType("int");
+        .HasColumnType("BIGINT");
 
     b.Property<decimal>("cycleTime")
         .ValueGeneratedOnAdd()
