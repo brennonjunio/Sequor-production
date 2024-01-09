@@ -81,7 +81,7 @@ namespace OrdersService
 
                 var response = new
                 {
-                    status = 201,
+                    status = 200,
                     type = "S",
                     description = "Ordens Listadas com sucesso!",
                     orders = groupedOrders
@@ -146,7 +146,7 @@ namespace OrdersService
                 {
                     return new
                     {
-                        status = 500,
+                        status = 404,
                         type = "E",
                         description = "Nenhum resultado encontrado.",
                     };
@@ -156,7 +156,7 @@ namespace OrdersService
             {
                 return new
                 {
-                    status = 500,
+                    status = 201,
                     type = "E",
                     description = ex.Message,
                 };
@@ -220,7 +220,7 @@ namespace OrdersService
                     {
                         return new
                         {
-                            status = 400,
+                            status = 201,
                             type = "E",
                             description = validationMessage
                         };
@@ -256,7 +256,7 @@ namespace OrdersService
             {
                 return new
                 {
-                    status = 500,
+                    status = 404,
                     type = "E",
                     description = ex.Message,
                 };
