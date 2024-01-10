@@ -156,7 +156,7 @@ namespace OrdersService
             {
                 return new
                 {
-                    status = 201,
+                    status = 200,
                     type = "E",
                     description = ex.Message,
                 };
@@ -178,7 +178,7 @@ namespace OrdersService
                 var combinedDateTime = DateTime.Parse(
                     $"{productionDateParams} {productionTimeParams}"
                 );
-
+                Console.WriteLine($"Caiuuuuuuuuuuu {productionDateParams}");
                 var customValidator = new CustomValidator(db);
 
                 var validationConfigurations = new List<CustomValidator.ValidationConfig>
@@ -220,7 +220,7 @@ namespace OrdersService
                     {
                         return new
                         {
-                            status = 201,
+                            status = 200,
                             type = "E",
                             description = validationMessage
                         };

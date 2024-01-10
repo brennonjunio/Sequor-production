@@ -189,16 +189,16 @@ namespace Sequor_production.Migrations
                 columns: new[] { "productCode", "productDescription", "image", "cycleTime" },
                 values: new object[,]
                 {
-                    { "P001", "Moto Esportiva", "moto_esportiva.jpg", 25.0 },
+                    { "P001", "Moto Esportiva", "moto_esportiva.jpg", 50.0 },
                     { "P002", "Scooter", "scooter.jpg", 18.5 },
-                    { "P003", "Bicicleta Elétrica", "bicicleta_eletrica.jpg", 30.0 },
-                    { "P004", "Skate Elétrico", "skate_eletrico.jpg", 12.0 },
-                    { "P005", "Capacete de Couro", "capacete.jpg", 5.0 },
-                    { "P006", "Luvas de Motociclista", "luvas.jpg", 3.5 },
-                    { "P007", "Óculos de Proteção", "oculos.jpg", 2.0 },
-                    { "P008", "Jaqueta de Motociclista", "jaqueta.jpg", 15.0 },
-                    { "P009", "Protetor de Joelho", "protetor_joelho.jpg", 1.5 },
-                    { "P010", "Mochila para Motociclistas", "mochila.jpg", 8.0 }
+                    { "P003", "Bicicleta Elétrica", "bicicleta_eletrica.jpg", 45.0 },
+                    { "P004", "Skate Elétrico", "skate_eletrico.jpg", 18.0 },
+                    { "P005", "Capacete de Couro", "capacete.jpg", 20.9 },
+                    { "P006", "Luvas de Motociclista", "luvas.jpg", 55.0 },
+                    { "P007", "Óculos de Proteção", "oculos.jpg", 29.3 },
+                    { "P008", "Jaqueta de Motociclista", "jaqueta.jpg", 50.2 },
+                    { "P009", "Protetor de Joelho", "protetor_joelho.jpg", 30.5 },
+                    { "P010", "Mochila para Motociclistas", "mochila.jpg", 40.0 }
                 }
             );
 
@@ -219,34 +219,6 @@ namespace Sequor_production.Migrations
                     { "ORD010", 20, "P001" },
                 }
             );
-
-           migrationBuilder.InsertData(
-    table: "Production",
-    columns: new[]
-    {
-        "id",
-        "email",
-        "order",
-        "date",
-        "quantity",
-        "materialCode",
-        "cycleTime"
-    },
-    values: new object[,]
-    {
-     { 1, "user1@example.com", "ORD001", new DateTime(2023, 4, 1), 10, "M001", 12.5 },
-                { 2, "user2@example.com", "ORD002", new DateTime(2023, 5, 15), 5, "M002", 8.0 },
-                { 3, "user3@example.com", "ORD003", new DateTime(2023, 6, 20), 8, "M003", 15.3 },
-                { 4, "user4@example.com", "ORD004", new DateTime(2023, 7, 5), 15, "M001", 12.5 },
-                { 5, "user5@example.com", "ORD005", new DateTime(2023, 8, 12), 7, "M002", 8.0 },
-                { 6, "user6@example.com", "ORD006", new DateTime(2023, 9, 3), 12, "M003", 15.3 },
-                { 7, "user7@example.com", "ORD007", new DateTime(2023, 10, 10), 6, "M001", 12.5 },
-                { 8, "user8@example.com", "ORD008", new DateTime(2023, 11, 28), 9, "M002", 8.0 },
-                { 9, "user9@example.com", "ORD009", new DateTime(2023, 12, 1), 3, "M003", 15.3 },
-                { 10, "user10@example.com", "ORD010", new DateTime(2024, 1, 10), 20, "M001", 12.5 }
-    }
-);
-
 
             migrationBuilder.InsertData(
                 table: "ProductMaterial",
